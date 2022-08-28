@@ -21,7 +21,7 @@ ENDPROCEDURE
 ```
 
 Convert by running 
-```
-compilePSC.py {file.txt}
+```console
+foo@bar:~$ compilePSC.py {file.txt}
 ```
 
