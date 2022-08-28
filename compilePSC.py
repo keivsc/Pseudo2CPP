@@ -13,7 +13,7 @@ start_case = False
 file = open(os.path.dirname(os.path.abspath(__file__))+"\\"+sys.argv[1], 'r').readlines()
 parsed = ""
 for line in file:
-    line = textwrap.dedent(line)
+    line = ' '.join(line.split(' '))
     for k, v in data_types.items():
         if k in line:
             line = line.replace(k, v)
@@ -31,11 +31,11 @@ for line in file:
         if not ")" in line:
             line += "()"
 
-    if line.startswith("IF"):
+    if "IF" in line:
         line = line.replace("IF ", "")
         line = f"if ({line}){'{'}"
 
-    if line.startswith("FUNCTION"):
+    if "FUNCTION" in line:
         line = line.replace("FUNCTION", "auto")
         if "(" not in line:
             line += "= [](){"
@@ -49,7 +49,7 @@ for line in file:
                 argv.append(f"{arg[1]} {arg[0]}")
             line = final + ",".join(argv) + "){"
 
-    if line.startswith("PROCEDURE"):
+    if "PROCEDURE" in line:
         line = line.replace("PROCEDURE ", "auto ")
         if "(" not in line:
             line += "= [](){"
@@ -75,11 +75,11 @@ for line in file:
         line = line.replace("CASE OF ", "switch(")
         line += "){"
 
-    if line.startswith("INPUT"):
+    if "INPUT" in line:
         var = line.replace("INPUT ", "")
         line = f"string {var};\ncin >> {var}"
 
-    if line.startswith("OUTPUT") or line.startswith("PRINT"):
+    if "OUTPUT" in line or "PRINT" in line:
         line = line.replace("OUTPUT", "cout <<")
         line = line.replace("PRINT", "cout <<")
         line = line.replace('", "', '"<< "')
@@ -87,8 +87,8 @@ for line in file:
 
     if line.startswith("END"):
         line = "}"
-
-    if line.startswith("FOR"):
+    
+    if "FOR" in line:
         line = line.replace("FOR ", "")
         lineSplit = line.split(" = ")
         lineSplit2 = lineSplit[1].split(" TO ")
